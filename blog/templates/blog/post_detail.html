@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p><em>Par {{ post.author.username }} - {{ post.created_at|date:"d M Y" }}</em></p>
+    <p>{{ post.content }}</p>
+
+    <hr>
+    <h3>Commentaires</h3>
+    {% for comment in comments %}
+        <p><strong>{{ comment.author }}</strong> : {{ comment.body }}</p>
+    {% empty %}
+        <p>Aucun commentaire pour cet article.</p>
+    {% endfor %}
+
+    <hr>
+    <h3>Ajouter un commentaire</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Envoyer</button>
+    </form>
+
+    <br><a href="{% url 'home' %}">← Retour à l’accueil</a>
+</body>
+</html>
